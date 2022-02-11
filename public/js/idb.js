@@ -2,6 +2,7 @@ let db;
 
 const request = indexedDB.open('budget_tracker', 1)
 
+// creates indexdb if one has not been created already
 request.onupgradeneeded = function(event) {
     const db = event.target.result;
     db.createObjectStore('new_transaction', { autoIncrement: true})
@@ -19,6 +20,8 @@ request.onerror = function(event) {
     console.log(event.target.errorCode)
 }
 
+
+// updates indexDB database as offline transactions are input
 function saveRecord(record) {
     const transaction = db.transaction(['new_transaction'], 'readwrite')
 
@@ -27,6 +30,7 @@ function saveRecord(record) {
     transactionObjectStore.add(record)
 }
 
+// transfers the offline info to online once the data connection is re-established
 function uploadTransaction() {
     const transaction = db.transaction(['new_transaction'], 'readwrite')
 

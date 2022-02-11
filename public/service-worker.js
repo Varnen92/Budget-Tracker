@@ -8,6 +8,7 @@ const FILES_TO_CACHE = [
     './css/styles.css'
 ]
 
+// service worker to enable offline functionality
 self.addEventListener('fetch', function (e) {
     console.log('fetch request : ' + e.request.url)
     e.respondWith(
